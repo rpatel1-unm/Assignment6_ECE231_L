@@ -1,5 +1,3 @@
-# Assignment6_ECE231_L
-cat > README.md << 'EOF'
 # Assignment 6 - Doubly-Linked List of Coordinates
 
 ## What it does
