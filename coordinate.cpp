@@ -1,11 +1,13 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+#include <iostream>
+#include <iomanip>
+#include <cmath>
 #include "coordinate.h"
+
+using namespace std;
 
 void add_coordinate(Coordinate *list_end, float x, float y)
 {
-  Coordinate *new_coord = malloc(sizeof(Coordinate));
+  Coordinate *new_coord = new Coordinate;
   Coordinate *temp = list_end;
   int count = 1;
 
@@ -26,20 +28,22 @@ void add_coordinate(Coordinate *list_end, float x, float y)
 
 void forward_display(Coordinate *list_beginning)
 {
+  cout << fixed << setprecision(2);
   Coordinate *temp = list_beginning;
   while (temp != NULL)
   {
-    printf("id %d: (%.2f, %.2f)\n", temp->coord_id, temp->x, temp->y);
+    cout << "id " << temp->coord_id << ": (" << temp->x << ", " << temp->y << ")" << endl;
     temp = temp->next;
   }
 }
 
 void backward_display(Coordinate *list_end)
 {
+  cout << fixed << setprecision(2);
   Coordinate *temp = list_end;
   while (temp != NULL)
   {
-    printf("id %d: (%.2f, %.2f)\n", temp->coord_id, temp->x, temp->y);
+    cout << "id " << temp->coord_id << ": (" << temp->x << ", " << temp->y << ")" << endl;
     temp = temp->previous;
   }
 }
@@ -55,17 +59,17 @@ void delete_coordinate(Coordinate *list_beginning, int coord_id_to_delete)
 
   if (temp == NULL)
   {
-    printf("id %d not found\n", coord_id_to_delete);
+    cout << "id " << coord_id_to_delete << " not found" << endl;
     return;
   }
 
   if (temp == list_beginning)
   {
-    // the head pointer can't change, so copy the second node in and free it
+    // the head pointer can't change, so copy the second node in and delete it
     Coordinate *second = temp->next;
     if (second == NULL)
     {
-      printf("can't delete the only coordinate\n");
+      cout << "can't delete the only coordinate" << endl;
       return;
     }
     temp->x = second->x;
@@ -76,7 +80,7 @@ void delete_coordinate(Coordinate *list_beginning, int coord_id_to_delete)
     {
       second->next->previous = temp;
     }
-    free(second);
+    delete second;
   }
   else
   {
@@ -85,7 +89,7 @@ void delete_coordinate(Coordinate *list_beginning, int coord_id_to_delete)
     {
       temp->next->previous = temp->previous;
     }
-    free(temp);
+    delete temp;
   }
 }
 
@@ -120,6 +124,7 @@ void closest_to(Coordinate *list_beginning, float x, float y)
     temp = temp->next;
   }
 
-  printf("closest to (%.2f, %.2f) is id %d (%.2f, %.2f), distance %.2f\n",
-         x, y, closest->coord_id, closest->x, closest->y, best);
+  cout << fixed << setprecision(2);
+  cout << "closest to (" << x << ", " << y << ") is id " << closest->coord_id
+       << " (" << closest->x << ", " << closest->y << "), distance " << best << endl;
 }

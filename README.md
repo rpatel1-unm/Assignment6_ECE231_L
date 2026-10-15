@@ -6,8 +6,8 @@ main.c then tests every list function: it displays the list in both directions, 
 
 ## Files
 - coordinate.h - the Coordinate struct and function prototypes
-- coordinate.c - the linked list functions
-- main.c - reads the command line, builds the list, and tests each function
+- coordinate.cpp - the linked list functions
+- main.cpp - reads the command line, builds the list, and tests each function
 
 ## Functions
 - add_coordinate: adds a node to the end of the list (coord_id is based on the list length)
@@ -18,7 +18,7 @@ main.c then tests every list function: it displays the list in both directions, 
 - closest_to: finds the coordinate nearest to a given x, y and prints the distance
 
 ## Build and run
-    gcc -o main main.c coordinate.c -lm
+    g++ -o main main.cpp coordinate.cpp
     ./main 10
 
 ## Notes

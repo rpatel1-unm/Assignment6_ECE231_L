@@ -1,27 +1,29 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
 #include "coordinate.h"
+
+using namespace std;
 
 int main(int argc, char *argv[])
 {
   if (argc != 2)
   {
-    printf("usage: ./main <number of coordinates>\n");
+    cout << "usage: ./main <number of coordinates>" << endl;
     return 1;
   }
 
   int n = atoi(argv[1]);
   if (n < 1)
   {
-    printf("enter a number of 1 or more\n");
+    cout << "enter a number of 1 or more" << endl;
     return 1;
   }
 
   srand(time(NULL));
 
   // make the first node by hand
-  Coordinate *list_beginning = malloc(sizeof(Coordinate));
+  Coordinate *list_beginning = new Coordinate;
   list_beginning->x = (float)(rand() % 10000) / 100;
   list_beginning->y = (float)(rand() % 10000) / 100;
   list_beginning->coord_id = 0;
@@ -29,27 +31,26 @@ int main(int argc, char *argv[])
   list_beginning->previous = NULL;
   Coordinate *list_end = list_beginning;
 
-  int i;
-  for (i = 1; i < n; i++)
+  for (int i = 1; i < n; i++)
   {
     add_coordinate(list_end, (float)(rand() % 10000) / 100, (float)(rand() % 10000) / 100);
     list_end = list_end->next;
   }
 
-  printf("Length: %d\n", list_length(list_beginning));
+  cout << "Length: " << list_length(list_beginning) << endl;
 
-  printf("\nForward:\n");
+  cout << "\nForward:" << endl;
   forward_display(list_beginning);
 
-  printf("\nBackward:\n");
+  cout << "\nBackward:" << endl;
   backward_display(list_end);
 
-  printf("\nDeleting id 2\n");
+  cout << "\nDeleting id 2" << endl;
   delete_coordinate(list_beginning, 2);
   forward_display(list_beginning);
-  printf("Length: %d\n", list_length(list_beginning));
+  cout << "Length: " << list_length(list_beginning) << endl;
 
-  printf("\n");
+  cout << endl;
   closest_to(list_beginning, 50.0, 50.0);
 
   // free everything
@@ -57,7 +58,7 @@ int main(int argc, char *argv[])
   while (temp != NULL)
   {
     Coordinate *next = temp->next;
-    free(temp);
+    delete temp;
     temp = next;
   }
 
